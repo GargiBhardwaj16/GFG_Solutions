@@ -87,7 +87,6 @@ class DisjointSet {
 class Solution {
     static int spanningTree(int V, int E, List<List<int[]>> adj) {
         List<Edge> edges = new ArrayList<>();
-        
         for (int i = 0; i < V; i++) {
             for (int[] edge : adj.get(i)) {
                 int adjNode = edge[0];
@@ -95,23 +94,18 @@ class Solution {
                 edges.add(new Edge(i, adjNode, wt));
             }
         }
-
         DisjointSet ds = new DisjointSet(V);
         Collections.sort(edges);
-
-        int mstWt = 0;
-
+        int ans = 0;
         for (Edge edge : edges) {
             int u = edge.src;
             int v = edge.dest;
             int wt = edge.weight;
-
             if (ds.findUPar(u) != ds.findUPar(v)) {
-                mstWt += wt;
+                ans += wt;
                 ds.unionBySize(u, v);
             }
         }
-
-        return mstWt;
+        return ans;
     }
 }
